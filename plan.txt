@@ -1,9 +1,0 @@
--> initialize NodeJs Project
--> initialize first view
--> creating room
--> add ability to view our own video
--> add other persons to view their video
--> add ability to message
--> add mute/unmute button
--> add stop start video button
--> add styling
