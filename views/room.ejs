@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- Declares the document type and language (English) -->
+      <meta charset="UTF-8">
+      <!-- Ensures proper rendering and touch zooming on mobile devices -->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <!-- The title of the webpage -->
+      <title>Video Chat</title>
+
+      <!-- Embed JavaScript inside the template to inject dynamic data (roomId) -->
+      <script>
+         const ROOM_ID = "<%= roomId %>"
+      </script>
+
+      <!-- Bootstrap CSS for styling the page using the Bootstrap framework -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+      <!-- PeerJS for establishing WebRTC peer-to-peer connections -->
+      <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
+      <!-- jQuery for DOM manipulation and handling events -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+      <!-- Popper.js for tooltips, popovers (dependency for Bootstrap) -->
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+      <!-- Socket.io for real-time communication between the server and the clients -->
+      <script src="/socket.io/socket.io.js" defer></script>
+
+      <!-- Custom CSS styles for the page -->
+      <link rel="stylesheet" href="style.css">
+
+      <!-- Custom JavaScript file for functionality, deferred to ensure it loads after the page -->
+      <script src="script.js" defer></script>
+
+      <!-- Font Awesome icons for using icons in the UI -->
+      <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+
+      <!-- Inline CSS for video layout -->
+      <style>
+         #video-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+         }
+         video {
+            height: 300px;
+            width: 400px;
+            object-fit: cover;
+            padding: 8px;
+         }
+      </style>
+   </head>
+
+   <body>
+      <!-- Main container for the video conferencing UI -->
+      <div class="main">
+         <!-- Left section of the UI containing the video grid and controls -->
+         <div class="main__left">
+            <!-- Video grid to display participants' video streams -->
+            <div class="main__videos">
+               <div id="video-grid">
+                  <!-- Video elements will be dynamically added here -->
+               </div>
+            </div>
+
+            <!-- Controls for muting, stopping video, security, participants, and chat -->
+            <div class="main__controls">
+               <div class="main__controls__block">
+                  <!-- Button for muting/unmuting the microphone -->
+                  <div onclick="muteUnmute()" class="main__controls__button main__mute_button">
+                     <i class="fas fa-microphone"></i>
+                     <span>Mute</span>
+                  </div>
+                  <!-- Button for starting/stopping video -->
+                  <div onclick="playStop()" class="main__controls__button main__video_button">
+                     <i class="fas fa-video"></i>
+                     <span>Stop Video</span>
+                  </div>
+               </div>
+
+               <!-- Security, Participants, and Chat buttons -->
+               <div class="main__controls__block">
+                  <!-- Security button (icon only, no functionality defined here) -->
+                  <div class="security_button main__controls__button">
+                     <i class="fas fa-shield-alt"></i>
+                     <span>Security</span>
+                  </div>
+                  <!-- Button to show a participant list -->
+                  <div class="main__controls__button main__controls__participant">
+                     <i class="fas fa-user-friends"></i>
+                     <span>Participants</span>
+                  </div>
+                  <!-- Button to open the chat window -->
+                  <div class="main__controls__button chat__button">
+                     <i class="fas fa-comment-alt"></i>
+                     <span>Chat</span>
+                  </div>
+               </div>
+
+               <!-- Leave Meeting button -->
+               <div class="main__controls__block">
+                  <div class="main__controls__button">
+                     <span class="leave_meeting">Leave Meeting</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Right section for the chat window -->
+         <div class="main__right">
+            <!-- Chat header -->
+            <div class="main__header">
+               <h6>Chat</h6>
+            </div>
+            
+            <!-- Chat window where messages will be displayed -->
+            <div class="main__chat_window">
+               <ul class="messages">
+                  <!-- Messages will be dynamically added here -->
+               </ul>
+            </div>
+
+            <!-- Message input and send button -->
+            <div class="main__message_container">
+               <input id="chat_message" type="text" placeholder="Type message here...">
+               <button class="send_button"><i class="fas fa-paper-plane"></i></button>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
